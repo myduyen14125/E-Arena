@@ -1,8 +1,9 @@
-import { Modal, Row, Col } from "antd";
+import { Col, Modal, Row } from "antd";
 import { Content } from "antd/lib/layout/layout";
-import { useEffect, useRef, useState } from "react";
-import UserItem from "../components/UserItem";
+import axios from "axios";
 import confetti from "canvas-confetti";
+import { useEffect, useState } from "react";
+import UserItem from "../components/UserItem";
 const GamePlay = () => {
   const [countDown, setCountDown] = useState(0);
   const [runTimer, setRunTimer] = useState(true);
@@ -13,7 +14,7 @@ const GamePlay = () => {
   const [btnChoice, setBtnChoice] = useState();
   const [isShowCorrect, setIsShowCorrect] = useState(false);
   const [numQues, setNumQues] = useState(0);
-  const btnRef = useRef(null);
+  const [myScore, setMyScore] = useState(7921);
   useEffect(() => {
     let timerId;
 
@@ -29,42 +30,6 @@ const GamePlay = () => {
 
     return () => clearInterval(timerId);
   }, [runTimer]);
-
-  useEffect(() => {
-    if (countDown < 0 && runTimer) {
-      console.log("expired");
-      setRunTimer(false);
-      setCountDown(0);
-      setIsShowCorrect(true);
-      setNumQues(numQues + 1);
-      if (anwser === quesCorrect) {
-        confetti({
-          particleCount: 150,
-        });
-        console.log("dap an dung");
-        btnChoice.style.background = "green";
-      } else {
-        btnChoice.style.background = "red";
-      }
-      setRunTimer(true);
-    }
-  }, [countDown, runTimer, anwser, quesCorrect, numQues]);
-  console.log(numQues);
-  const seconds = String(countDown % 60).padStart(2, 0);
-  const minutes = String(Math.floor(countDown / 60)).padStart(2, 0);
-  console.log(seconds, minutes);
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
   const englishquestions = [
     {
       question:
@@ -110,6 +75,69 @@ const GamePlay = () => {
       correct: "headache",
     },
   ];
+  console.log(englishquestions.length);
+  const fetchData = async () => {
+    // const res = await axios.get(
+    //   "https://dbb2-117-2-255-218.ap.ngrok.io/courses"
+    // );
+    console.log("test");
+    const res = await fetch(
+      "https://dbb2-117-2-255-218.ap.ngrok.io/courses"
+    ).then((response) => response.json());
+    console.log(res);
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+  useEffect(() => {
+    if (countDown < 0 && runTimer) {
+      console.log("expired");
+      setRunTimer(false);
+      setCountDown(0);
+      setIsShowCorrect(true);
+      if (anwser === quesCorrect) {
+        confetti({
+          particleCount: 150,
+        });
+        console.log("dap an dung");
+        setMyScore((prv) => prv + Math.floor(Math.random() * 1000 + 300));
+        btnChoice.style.background = "green";
+      } else {
+        btnChoice.style.background = "red";
+      }
+      if (numQues < englishquestions.length - 1) {
+        setTimeout(() => {
+          setNumQues((prv) => prv + 1);
+          console.log("++");
+          setCountDown(10);
+          btnChoice.style.background = "";
+          setBtnChoice("");
+          setButtonStyle("");
+          setIsShowCorrect(false);
+          setRunTimer(true);
+          setQuesCorrect("");
+          setAnwser("");
+        }, 3000);
+      }
+    }
+  }, [countDown, runTimer, anwser, quesCorrect, numQues]);
+  console.log(numQues);
+  const seconds = String(countDown % 60).padStart(2, 0);
+  const minutes = String(Math.floor(countDown / 60)).padStart(2, 0);
+  console.log(seconds, minutes);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   const onChooseAnwser = (aw, qs, e) => {
     console.log(aw, qs);
     setAnwser(aw);
@@ -128,10 +156,10 @@ const GamePlay = () => {
         <span className="text-3xl font-bold text-cyan-500 my-4 block">
           Người chơi
         </span>
-        <UserItem />
-        <UserItem />
-        <UserItem />
-        <UserItem />
+        <UserItem score={myScore} name="n3iV" />
+        <UserItem score={6732} />
+        <UserItem score={6321} />
+        <UserItem score={6299} />
       </div>
       <div className="relative">
         <div className="w-12 h-6 absolute top-4 right-12">
@@ -141,7 +169,7 @@ const GamePlay = () => {
         </div>
         <div className=" absolute w-2/4 top-0 left-1/2 -translate-x-1/2 mt-24">
           <h1 className="font-bold text-4xl">
-            {englishquestions[numQues].question}
+            Question {numQues + 1}: {englishquestions[numQues].question}
           </h1>
           <Row gutter={[24, 24]} className="mt-8">
             <Col className="gutter-row" span={12}>
