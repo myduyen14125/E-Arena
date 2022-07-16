@@ -1,8 +1,8 @@
-import { Modal, Row, Col } from "antd";
+import { Col, Modal, Row } from "antd";
 import { Content } from "antd/lib/layout/layout";
-import { useEffect, useRef, useState } from "react";
-import UserItem from "../components/UserItem";
 import confetti from "canvas-confetti";
+import { useEffect, useState } from "react";
+import UserItem from "../components/UserItem";
 const GamePlay = () => {
   const [countDown, setCountDown] = useState(0);
   const [runTimer, setRunTimer] = useState(true);
@@ -13,7 +13,6 @@ const GamePlay = () => {
   const [btnChoice, setBtnChoice] = useState();
   const [isShowCorrect, setIsShowCorrect] = useState(false);
   const [numQues, setNumQues] = useState(0);
-  const btnRef = useRef(null);
   useEffect(() => {
     let timerId;
 
@@ -36,7 +35,6 @@ const GamePlay = () => {
       setRunTimer(false);
       setCountDown(0);
       setIsShowCorrect(true);
-      setNumQues(numQues + 1);
       if (anwser === quesCorrect) {
         confetti({
           particleCount: 150,
@@ -46,7 +44,17 @@ const GamePlay = () => {
       } else {
         btnChoice.style.background = "red";
       }
-      setRunTimer(true);
+      setTimeout(() => {
+        if (numQues < englishquestions.length - 1) setNumQues(numQues + 1);
+        setCountDown(10);
+        btnChoice.style.background = "";
+        setBtnChoice("");
+        setButtonStyle("");
+        setIsShowCorrect(false);
+        setRunTimer(true);
+        setQuesCorrect("");
+        setAnwser("");
+      }, 3000);
     }
   }, [countDown, runTimer, anwser, quesCorrect, numQues]);
   console.log(numQues);
@@ -141,7 +149,7 @@ const GamePlay = () => {
         </div>
         <div className=" absolute w-2/4 top-0 left-1/2 -translate-x-1/2 mt-24">
           <h1 className="font-bold text-4xl">
-            {englishquestions[numQues].question}
+            Question {numQues + 1}: {englishquestions[numQues].question}
           </h1>
           <Row gutter={[24, 24]} className="mt-8">
             <Col className="gutter-row" span={12}>
