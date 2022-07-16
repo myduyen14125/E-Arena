@@ -1,31 +1,25 @@
+import { List } from "antd";
 import React from "react";
-import { List, Typography } from "antd";
 const Courses = () => {
   const data = [
     {
-      title: "Toán nâng cao",
-      id: "toan-cao-cap",
+      title: "Tiếng anh 10",
+      id: "tieng-anh-10",
     },
     {
-      title: "Toán cơ bản",
-      id: "toan-co-ban",
+      title: "Tiếng anh 11",
+      id: "tieng-anh-11",
     },
     {
-      title: "Toán đại số",
-      id: "toan-dai-so",
-    },
-    {
-      title: "Toán hình",
-      id: "toan-hinh",
+      title: "Tiếng anh 12",
+      id: "tieng-anh-12",
     },
   ];
   return (
     <div>
       <List
         header={
-          <div className="font-bold text-3xl text-gray-600">
-            Lựa chọn khóa học
-          </div>
+          <div className="font-bold text-3xl text-gray-600">Lựa chọn topic</div>
         }
         bordered
         dataSource={data}
