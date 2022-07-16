@@ -1,5 +1,6 @@
 package com.backend.controller;
 
+import com.backend.model.Course;
 import com.backend.model.Topic;
 import com.backend.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,15 @@ public class TopicController {
         return new ResponseEntity<>(topics, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Topic> getTopicById(@PathVariable Integer id) {
+        Optional<Topic> topicOptional = topicService.findById(id);
+
+        if(!topicOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<Topic>(topicOptional.get(), HttpStatus.OK);
+    }
     @PostMapping
     public ResponseEntity<Topic> saveCustomer(@RequestBody Topic topic) {
         return new ResponseEntity<>(topicService.save(topic), HttpStatus.CREATED);

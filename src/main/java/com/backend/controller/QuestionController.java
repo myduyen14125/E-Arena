@@ -1,6 +1,7 @@
 package com.backend.controller;
 
 import com.backend.model.Question;
+import com.backend.model.Topic;
 import com.backend.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,16 @@ public class QuestionController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         else return new ResponseEntity<>(questions, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Question> getTopicById(@PathVariable Integer id) {
+        Optional<Question> questionOptional = questionService.findById(id);
+
+        if(!questionOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<Question>(questionOptional.get(), HttpStatus.OK);
     }
 
     @GetMapping("/getQuestionRandom")

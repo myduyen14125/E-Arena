@@ -26,6 +26,15 @@ public class CourseController {
         }
         return new ResponseEntity<>(courses, HttpStatus.OK);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<Course> getCourseById(@PathVariable Integer id) {
+        Optional<Course> courseOptional = courseService.findById(id);
+
+        if(!courseOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<Course>(courseOptional.get(), HttpStatus.OK);
+    }
 
     @PostMapping
     public ResponseEntity<Course> saveCustomer(@RequestBody Course course) {
