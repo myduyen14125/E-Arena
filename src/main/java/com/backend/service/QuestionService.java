@@ -5,5 +5,6 @@ import com.backend.model.Question;
 import java.util.List;
 
 public interface QuestionService extends GenerateService<Question> {
-    List<Question> getQuestionRandom(int numberQuestion);
+    List<Question> getQuestionRandomBySystem(int numberQuestion);
+    List<Question> getQuestionRandomByUser(int level, int numberQuestion);
 }

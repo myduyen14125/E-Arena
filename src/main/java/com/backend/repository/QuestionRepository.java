@@ -9,6 +9,8 @@ import java.util.List;
 
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
-    @Query(nativeQuery=true, value = "select * from question ORDER BY RAND() LIMIT 2")
-    List<Question> getQuestionRandom(int numberQuestion);
+
+    @Query(nativeQuery=true,
+            value = "select * from question where difficulty_level = :level ORDER BY RAND() LIMIT :numberQuestion ")
+    List<Question> getQuestionsRandomByLevel(int level, int numberQuestion);
 }

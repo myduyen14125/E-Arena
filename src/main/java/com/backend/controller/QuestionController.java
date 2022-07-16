@@ -28,7 +28,7 @@ public class QuestionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Question> getTopicById(@PathVariable Integer id) {
+    public ResponseEntity<Question> getQuestionById(@PathVariable Integer id) {
         Optional<Question> questionOptional = questionService.findById(id);
 
         if(!questionOptional.isPresent()) {
@@ -37,9 +37,24 @@ public class QuestionController {
         return new ResponseEntity<Question>(questionOptional.get(), HttpStatus.OK);
     }
 
-    @GetMapping("/getQuestionRandom")
+    @GetMapping("/getQuestionRandomBySystem")
     public ResponseEntity<Iterable<Question>> getQuestionsRandom() {
-        List<Question> questions = questionService.getQuestionRandom(2);
+        List<Question> questions = questionService.getQuestionRandomBySystem(10);
+        if(questions.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        else return new ResponseEntity<>(questions, HttpStatus.OK);
+    }
+
+    @GetMapping("/getQuestionRandomByUser")
+    public ResponseEntity<Iterable<Question>> getQuestionsRandomByUser(
+            @RequestParam int number_question_easy,
+            @RequestParam int number_question_medium,
+            @RequestParam int number_question_hard
+    ) {
+        List<Question> questions = questionService.getQuestionRandomByUser(1, number_question_easy);
+        questions.addAll(questionService.getQuestionRandomByUser(2, number_question_medium));
+        questions.addAll(questionService.getQuestionRandomByUser(3, number_question_hard));
         if(questions.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
