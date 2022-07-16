@@ -17,7 +17,7 @@ const Courses = () => {
   ];
   return (
     <div>
-      <List
+      <List className="px-40 h-screen"
         header={
           <div className="font-bold text-3xl text-gray-600">Lựa chọn topic</div>
         }
