@@ -27,6 +27,15 @@ public class QuestionController {
         else return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 
+    @GetMapping("/exam/{examId}")
+    public ResponseEntity<Iterable<Question>> getQuestionsByExam(@PathVariable Integer examId) {
+        List<Question> questions = questionService.getQuestionsByExam(examId);
+        if(questions.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        else return new ResponseEntity<>(questions, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Question> getQuestionById(@PathVariable Integer id) {
         Optional<Question> questionOptional = questionService.findById(id);

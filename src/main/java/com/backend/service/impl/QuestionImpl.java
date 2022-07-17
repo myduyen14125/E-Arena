@@ -38,6 +38,11 @@ public class QuestionImpl implements QuestionService {
     }
 
     @Override
+    public List<Question> getQuestionsByExam(Integer examId) {
+        return questionRepository.getQuestionsByExam(examId);
+    }
+
+    @Override
     public Optional<Question> findById(Integer id) {
         return questionRepository.findById(id);
     }

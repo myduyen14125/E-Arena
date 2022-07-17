@@ -34,4 +34,8 @@ public class Question {
     @OneToMany(mappedBy = "question")
     @JsonManagedReference
     private List<Choice> choices;
+
+    @OneToMany(mappedBy = "question")
+    @JsonManagedReference
+    private List<QuestionExam> questionExams;
 }
