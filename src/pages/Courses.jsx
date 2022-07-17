@@ -17,15 +17,18 @@ const Courses = () => {
   ];
   return (
     <div>
-      <List className="px-40 h-screen"
+      <List
+        className="px-40 h-screen"
         header={
           <div className="font-bold text-3xl text-gray-600">Lựa chọn topic</div>
         }
         bordered
         dataSource={data}
         renderItem={(item) => (
-          <List.Item>
-            <a href={`/course/${item.id}`}>{item.title}</a>
+          <List.Item key={item.id}>
+            <a className="!text-gray-600" href={`/course/${item.id}`}>
+              {item.title}
+            </a>
           </List.Item>
         )}
       />

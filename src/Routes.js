@@ -3,8 +3,9 @@ import { Route, Switch } from "react-router-dom";
 import Chapter from "./pages/Chapter";
 import Courses from "./pages/Courses";
 import GamePlay from "./pages/GamePlay";
-import Scheduler from "./pages/Scheduler"
+import Scheduler from "./pages/Scheduler";
 import Home from "./pages/Home";
+import Ranking from "./pages/Ranking";
 
 const Routes = () => {
   return (
@@ -23,6 +24,9 @@ const Routes = () => {
       </Route>
       <Route path="/scheduler">
         <Scheduler />
+      </Route>
+      <Route path="/ranking">
+        <Ranking />
       </Route>
     </Switch>
   );
