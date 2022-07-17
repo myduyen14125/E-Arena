@@ -12,6 +12,7 @@ const handleFulfilled = (state, action) => {
   console.log(action)
   console.log('test')
   state.course = action.payload
+  console.log(state.course)
 
 }
 

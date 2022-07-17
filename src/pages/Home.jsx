@@ -22,7 +22,7 @@ const Home = () => {
     
   }
   const {course} = useSelector(state=>state.course)
-
+  
   useEffect(()=>{
     _fetch()
 

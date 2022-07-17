@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 const Room = () => {
   return (
     <div className="w-full h-48 rounded-lg border border-cyan-500 flex justify-center items-center">
@@ -20,7 +21,7 @@ const Room = () => {
           type="primary"
           shape="round"
         >
-          <a href="/play/2">Tham gia</a>
+          <Link to="/play/2">Tham gia</Link>
         </Button>
       </div>
     </div>

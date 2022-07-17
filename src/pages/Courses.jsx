@@ -1,34 +1,30 @@
-import React from "react";
-import { List, Typography } from "antd";
+import { List } from "antd";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 const Courses = () => {
-  const data = [
-    {
-      title: "Vocabulary",
-      id: "vocabulary",
-    },
-    {
-      title: "Phonetic",
-      id: "phoneitc",
-    },
-    {
-      title: "Reading",
-      id: "reading",
-    },
-  
-  ];
+  const {course} = useSelector(state=> state.course)
+  const [chapter,setChapter] = useState([])
+  console.log(course[2])
+  useEffect(()=>{
+  setChapter(course[2].topics)
+
+  },[])
+  console.log(chapter)
   return (
     <div>
       <List
+        className="px-40 h-screen"
         header={
-          <div className="font-bold text-3xl text-gray-600">
-            Lựa chọn khóa học
-          </div>
+          <div className="font-bold text-3xl text-gray-600">Lựa chọn topic</div>
         }
         bordered
-        dataSource={data}
+        dataSource={chapter}
         renderItem={(item) => (
-          <List.Item>
-            <a href={`/course/${item.id}`}>{item.title}</a>
+          <List.Item key={item.id}>
+            <Link className="!text-gray-600" to={`/course/${item.id}`}>
+              {item.name}
+            </Link>
           </List.Item>
         )}
       />
