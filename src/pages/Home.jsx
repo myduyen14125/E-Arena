@@ -1,11 +1,33 @@
 import { Col, Row, Tabs } from "antd";
 import { Content } from "antd/lib/layout/layout";
-import React from "react";
+import ColumnGroup from "antd/lib/table/ColumnGroup";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useDispatch,useSelector } from "react-redux";
 import CardItem from "../components/Card";
+import { getCourses } from "../slices/course.slice";
 const Home = () => {
   const onChange = (key) => {
     console.log(key);
   };
+
+
+
+  const dispatch = useDispatch()
+  const [courses, setCourses] = useState([])
+  const _fetch = async () =>{
+     const res = await dispatch(getCourses()) 
+     console.log(res,'test')
+     setCourses([...res.payload])
+    
+  }
+  const {course} = useSelector(state=>state.course)
+
+  useEffect(()=>{
+    _fetch()
+
+  },[])
+  console.log(courses)
   const maths = [
     {
       title: "Chương 1",
@@ -96,18 +118,18 @@ const Home = () => {
         </Tabs.TabPane>
         <Tabs.TabPane tab="Hóa Học" key="2">
           <Row gutter={[16, 16]}>
-            {chemistrys.map(({ title, desc, img }, idx) => (
+            {chemistrys.map(({ url, name }, idx) => (
               <Col className="gutter-row" span={6}>
-                <CardItem title={title} desc={desc} img={img} key={idx} />
+                <CardItem title={name} desc={name} img={url} key={idx} />
               </Col>
             ))}
           </Row>
         </Tabs.TabPane>
         <Tabs.TabPane tab="Tiếng Anh" key="3">
           <Row gutter={[16, 16]}>
-            {english.map(({ title, desc, img }, idx) => (
+            {courses?.[0] && courses.map(({ name, url }, idx) => (
               <Col className="gutter-row" span={6}>
-                <CardItem title={title} desc={desc} img={img} key={idx} />
+                <CardItem title={name} desc={name} img={url} key={idx} />
               </Col>
             ))}
           </Row>

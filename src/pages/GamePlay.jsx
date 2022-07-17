@@ -1,5 +1,6 @@
 import { Col, Modal, Row } from "antd";
 import { Content } from "antd/lib/layout/layout";
+import ColumnGroup from "antd/lib/table/ColumnGroup";
 import confetti from "canvas-confetti";
 import { useEffect, useState } from "react";
 import UserItem from "../components/UserItem";
@@ -28,7 +29,13 @@ const GamePlay = () => {
 
     return () => clearInterval(timerId);
   }, [runTimer]);
-
+  const _fetch = async() =>{
+      const res = await fetch('http://localhost:8080/courses').then(res=>res.json())
+      console.log(res)
+  }
+  useEffect(()=>{
+    _fetch()
+  },[])
   useEffect(() => {
     if (countDown < 0 && runTimer) {
       console.log("expired");

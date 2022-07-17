@@ -3,21 +3,18 @@ import { List, Typography } from "antd";
 const Courses = () => {
   const data = [
     {
-      title: "Toán nâng cao",
-      id: "toan-cao-cap",
+      title: "Vocabulary",
+      id: "vocabulary",
     },
     {
-      title: "Toán cơ bản",
-      id: "toan-co-ban",
+      title: "Phonetic",
+      id: "phoneitc",
     },
     {
-      title: "Toán đại số",
-      id: "toan-dai-so",
+      title: "Reading",
+      id: "reading",
     },
-    {
-      title: "Toán hình",
-      id: "toan-hinh",
-    },
+  
   ];
   return (
     <div>
